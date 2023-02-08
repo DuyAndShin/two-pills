@@ -1,8 +1,7 @@
-
-import dotenv from "dotenv";
-import express, { Express, Request, Response } from "express";
-import path from "path";
 import cors from "cors";
+import dotenv from "dotenv";
+import express, { Express } from "express";
+import router from "@/routers";
 
 dotenv.config();
 
@@ -11,14 +10,18 @@ const app: Express = express();
 app.use(express.json());
 app.use(cors());
 
-app.use('/api', require('./routers'));
+app.use("/api", router);
 
-app.get('/api', (req: Request, res: Response) => {
-  return res.status(200).json({message: "Hello world from backend!"})
+app.get("/", (req, res) => {
+  return res.send("<h1>Hello world from backend!</h1>");
+});
+
+app.get("/api", (req, res) => {
+  return res.json({ message: "Hello world from backend!" });
 });
 
 const port = process.env.PORT || 8000;
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Example app listening on port ${port}`);
 });
