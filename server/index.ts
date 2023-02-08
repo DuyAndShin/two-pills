@@ -1,24 +1,22 @@
+import "module-alias/register";
+
+import router from "@/routes";
 import cors from "cors";
 import dotenv from "dotenv";
-import express, { Express } from "express";
-import router from "@/routers";
+import express from "express";
 
 dotenv.config();
 
-const app: Express = express();
+const app = express();
 
 app.use(express.json());
 app.use(cors());
 
-app.use("/api", router);
-
 app.get("/", (req, res) => {
-  return res.send("<h1>Hello world from backend!</h1>");
+  return res.status(200).send("<h1>Hello world from backend!</h1>");
 });
 
-app.get("/api", (req, res) => {
-  return res.json({ message: "Hello world from backend!" });
-});
+app.use("/api", router);
 
 const port = process.env.PORT || 8000;
 
